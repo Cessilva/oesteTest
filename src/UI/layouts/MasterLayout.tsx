@@ -14,15 +14,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    // bottom: 10 ,
-    // position: 'fixed',
-    // width: '100%',
   },
-  // main:{
-  //   height:'100%',
-  // }
 }));
-// Cambio este 
 const MasterLayout = ( props: any ) => {
   const classes = useStyles();
 //Forma del layout : header, footer y body
@@ -43,5 +36,4 @@ const MasterLayout = ( props: any ) => {
   );
 }
 
-//y lo exporto aqui 
 export default MasterLayout;

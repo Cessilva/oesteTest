@@ -24,7 +24,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const MyAppBar = (props:any)=> {
     const classes = useStyles();
-    console.log('MyAppBar : ',props);
+
+    const homeButtonClickHandler=()=>{
+      console.log('My AppBar homeButtonClickHandler')
+      props.history.push({pathname: '/'})
+    };
+    const adminButtonClickHandler=()=>{
+      console.log('My AppBar adminButtonClickHandler')
+      props.history.push({pathname: '/Admin'})
+    };
+    const loginButtonClickHandler=()=>{
+      console.log('My AppBar loginButtonClickHandler')
+      props.history.push({pathname: '/Login'})
+    };
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -35,9 +47,9 @@ const MyAppBar = (props:any)=> {
             <Typography variant="h6" className={classes.title}>
               AppBar Component
             </Typography>
-            <Button color="inherit">Home</Button>
-            <Button color="inherit">Admin</Button>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit" onClick={homeButtonClickHandler}>Home</Button>
+            <Button color="inherit" onClick={adminButtonClickHandler}>Admin</Button>
+            <Button color="inherit" onClick={loginButtonClickHandler}>Login</Button>
           </Toolbar>
         </AppBar>
       </div>

@@ -1,18 +1,20 @@
-import { makeStyles } from '@material-ui/core/styles';
+
+import { Component } from 'react';
 import Layout from '../../UI/layouts/Layout';
-const useStyles = makeStyles((theme) => ({
-  heightLayout: {
-    height:'100%',
-  },
-}));
-const AdminPage =()=> {
-  const classes = useStyles();
-    return(
-      // const dataJSX = '';
-      <Layout className={classes.heightLayout}>
-        <p> Admin Component!</p>
-      </Layout>
+import {Switch,Route} from 'react-router-dom';
+import Documentacion from '../../components/Documentacion/Documentacion'
+
+class AdminPage extends Component {
+  list = [{ text: 'Documentacion', path: '/admin/documentacion' }];
+  render() {
+    return (
+       <Layout  list={this.list} >
+       <Switch>
+        <Route path="/admin/documentacion" exact component={Documentacion}></Route>
+      </Switch>
+     </Layout>
     );
   }
-  
-  export default AdminPage;
+}
+
+export default AdminPage;

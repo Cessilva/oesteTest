@@ -9,9 +9,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { withRouter, RouteComponentProps} from 'react-router-dom';
 
 const drawerWidth = 240;
-////********-------LAYOUT DEL CENTRO DEL HOME  -------*********
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,9 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props {
+interface Props extends RouteComponentProps {
     children:any;
-    className:any;
+    list:any[];
     window?: () => Window;
 }
 
@@ -45,33 +45,37 @@ const Layout = (props: Props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-
+  const handleListItemClick = (event: any,index: number,path:string) => {
+    setSelectedIndex(index);
+    console.log(index,path)
+    props.history.push ({pathname:path});
+  };
+// ORIGINAL
   const drawer = (
     <div>
       <List>
-        <ListItem button >
-          <ListItemIcon><InboxIcon /> </ListItemIcon>
-          <ListItemText primary="inbox" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon><MailIcon /> </ListItemIcon>
-          <ListItemText primary="mail" />
-        </ListItem>
+        {props.list.map((object, index) => (
+          <ListItem button key={object.text} selected={selectedIndex===index} onClick={(event) => handleListItemClick(event,index,object.path)}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={object.text} />
+          </ListItem>
+        ))}
       </List>
     </div>
   );
+
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
@@ -83,7 +87,7 @@ const Layout = (props: Props) => {
               paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true, 
             }}
           >
             {drawer}
@@ -102,10 +106,9 @@ const Layout = (props: Props) => {
         </Hidden>
       </nav>
       <main className={classes.content}>
-        {props.children} 
+        {props.children}
       </main>
     </div>
   );
 }
-
-export default Layout;
+export default withRouter(Layout);
