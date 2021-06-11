@@ -6,8 +6,8 @@ interface Iprops {
 
 }
 
-class Login extends Component <Iprops> {
-    onLoginClickHandler = async ( nombre: string, edad:string,sexo:string) => {
+class GenerarCode extends Component <Iprops> {
+    onGenerarCodeClickHandler = async ( nombre: string, edad:string,sexo:string) => {
         axios.post(`/api/auth`, {nombre: nombre, edad:edad,sexo:sexo})
         .then(response => {
             if ( response.data.length ){
@@ -21,15 +21,15 @@ class Login extends Component <Iprops> {
             console.log(`Error al crear : `, error)
             })
     } 
-    render( ) { return <LoginView {...this.props} botonHandler={this.onLoginClickHandler}/> }
+    render( ) { return <GenerarCodeView {...this.props} botonHandler={this.onGenerarCodeClickHandler}/> }
     
 }
 interface IProps2{
     botonHandler: any;
 }
-class LoginView extends Component<IProps2>{
-    list= [["Email","Password"],["Enviar"]];
+class GenerarCodeView extends Component<IProps2>{
+    list= [["codigo"],["Generar Codigo"]];
     render( ) { return <DatosForm list={this.list} botonHandler={this.props.botonHandler}/> }
 }
 
-export default Login;
+export default GenerarCode;

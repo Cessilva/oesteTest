@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 interface Props {
     list: any[];
+    botonHandler:any;
     window?: () => Window;
 }
 
@@ -28,25 +29,26 @@ export default function DatosForm(props: Props) {
 
     const inputs = props.list[0]
     const botones = props.list[1]
+
+    const botonClickHandler = ( event: any) => {
+        props.botonHandler();
+      }
+    
     return (
         <Paper elevation={3} >
             <form className={classes.root} noValidate autoComplete="off">
                 {
                     inputs.map((input: string) => {
+                        
                         return (
                             <Input className={classes.display} placeholder={input} inputProps={{ 'aria-label': 'description' }} />
                         )
-
                     })
                 }
                 {
                     botones.map((boton: string) => {
                         return (
-                            <div >
-<Button fullWidth variant="contained" color="primary" >{boton}</Button>
-
-                            </div>
-                                
+                            <div ><Button fullWidth variant="contained" color="primary"  onClick={botonClickHandler}>{boton}</Button> </div>
                         )
                     })
                 }

@@ -17,13 +17,13 @@ class Listar extends Component {
     }
     componentDidMount() {
         console.log('componentStarredDidMount');
-        axios.get('/users')
+        axios.get('/api/users')
             .then(response => {
                 //MOdifying the data that is going to be sent to table
                 console.log(response.data);
                 const users: any[] = response.data;
                 const modUsers = users.map((user: any) => {
-                    return { Nombre: user.name, Edad: user.email, Sexo: user.address.city, Codigo: user.phone };
+                    return { Nombre: user.nombre, Edad: user.edad, Sexo: user.sexo, Codigo: user.codigo };
                 })
                 this.setState({ loading: false, data: modUsers, error: null })
             })
@@ -31,6 +31,7 @@ class Listar extends Component {
                 console.log(error);
                 this.setState({ loading: false, data: null, error: error })
             })
+        //  axios.post('/api/users', { nombre: "Cecilia",edad: 25,sexo: "F", codigo: "xxxx" })
     }
 
 }
