@@ -1,8 +1,9 @@
 import { Component } from 'react';
-import LoginForm from '../../UI/LoginForm';
+import DatosForm from '../../UI/DatosForm';
 
 class Login extends Component{
-    render( ) { return <LoginForm/> }
+    list= [["Email","Password"],["Enviar"]];
+    render( ) { return <DatosForm list={this.list}/> }
 }
 
 export default Login;

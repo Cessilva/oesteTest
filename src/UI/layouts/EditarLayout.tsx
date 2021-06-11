@@ -1,35 +1,25 @@
-import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+
 import Grid from '@material-ui/core/Grid';
 import DatosForm from '../DatosForm';
+import { Component } from 'react';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  }),
-);
-
-export default function EditarLayout() {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <DatosForm></DatosForm>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>Generador de codigo</Paper>
-        </Grid>
-      </Grid>
-    </div>
-  );
+class EditarLayout extends Component{
+  list= [["Nombre","Edad","Sexo"],["Actualizar","Eliminar"]];
+  list2= [["codigo"],["Generar Codigo"]];
+  render(){
+    return (
+        <div >
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+                <DatosForm list={this.list} />  
+            </Grid>
+            <Grid item xs={6}>
+                <DatosForm list={this.list2} /> 
+            </Grid>
+          </Grid>
+        </div>
+      );
+  }
 }
+
+export default EditarLayout ;

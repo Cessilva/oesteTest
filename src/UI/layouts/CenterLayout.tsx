@@ -40,7 +40,7 @@ interface Props extends RouteComponentProps {
     window?: () => Window;
 }
 
-const Layout = (props: Props) => {
+const CenterLayout = (props: Props) => {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -111,4 +111,4 @@ const Layout = (props: Props) => {
     </div>
   );
 }
-export default withRouter(Layout);
+export default withRouter(CenterLayout);
