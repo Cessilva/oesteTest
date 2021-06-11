@@ -1,6 +1,5 @@
 import { Component } from 'react';
-// , Length 
-import { IsString} from 'class-validator';
+import { IsString , Length } from 'class-validator';
 import axios from '../../UI/axios';
 import CrearForm from '../../UI/Forms/CrearForm';
 import {dataValidation} from '../../shared/validation';
@@ -14,7 +13,7 @@ export class AuthUserValidator {
     edad?: string;
     
     @IsString({message: `El sexo debe ser un string`})
-    // @Length(1,1,{message: `Puede ser F o M`})
+    @Length(1,1,{message: `Puede ser F o M`})
     sexo?: string;
 
 } 
