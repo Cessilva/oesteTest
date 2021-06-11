@@ -41,23 +41,23 @@ const StyledTableRow = withStyles((theme: Theme) =>
 )(TableRow);
 
 interface IProps {
-    // rows: any[];
+     rows: any[];
     // botonHandler: any;
     // editeHandler: any;
 
 }
 
-function createData(nombre: string, edad: number, sexo: string, codigo: string) {
-    return { nombre, edad, sexo, codigo};
-}
+// function createData(nombre: string, edad: number, sexo: string, codigo: string) {
+//     return { nombre, edad, sexo, codigo};
+// }
 
-const rows = [
-    createData('Frozen yoghurt', 159, 'f' , 'ghhg'),
-    createData('Ice cream sandwich', 237, 'f','ghhg'),
-    createData('Eclair', 262, 'f','ghhg'),
-    createData('Cupcake', 305,  'f','ghhg'),
-    createData('Gingerbread', 356, 'f','ghhg'),
-];
+// const rows = [
+//     createData('Frozen yoyghurt', 159, 'f' , 'ghhg'),
+//     createData('Ice cream sandwich', 237, 'f','ghhg'),
+//     createData('Eclair', 262, 'f','ghhg'),
+//     createData('Cupcake', 305,  'f','ghhg'),
+//     createData('Gingerbread', 356, 'f','ghhg'),
+// ];
 
 
 
@@ -81,14 +81,14 @@ export default function MyTable(props: IProps) {
             <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        {Object.keys(rows[0]).map((key, index) => (
+                        {Object.keys(props.rows[0]).map((key, index) => (
                             index === 0 ? <StyledTableCell key={index}  >{key}</StyledTableCell> : <StyledTableCell key={index} align="center" >{key}</StyledTableCell> 
                         ))}
                         <StyledTableCell align="center" >Actions</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row: any, index: number) => {
+                  {props.rows.map((row: any, index: number) => {
                 return (
                   <StyledTableRow hover role="checkbox" tabIndex={-1} key={index}>
                     {Object.values<string>(row).map((value, index) => (
