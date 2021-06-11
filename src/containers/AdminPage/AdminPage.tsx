@@ -1,6 +1,6 @@
 
 import { Component } from 'react';
-import Layout from '../../UI/layouts/Layout';
+import Layout from '../../UI/layouts/CenterLayout';
 import {Switch,Route} from 'react-router-dom';
 import Documentacion from '../../components/Documentacion/Documentacion'
 
@@ -10,11 +10,10 @@ class AdminPage extends Component {
     return (
        <Layout  list={this.list} >
        <Switch>
-        <Route path="/admin/documentacion" exact component={Documentacion}></Route>
+        <Route path="/admin" exact component={Documentacion}></Route>
       </Switch>
      </Layout>
     );
   }
 }
-
 export default AdminPage;

@@ -1,9 +1,19 @@
-import { Component } from 'react';
+import  {Component} from 'react';
+import Login from '../../components/Login/Login'
+
+import LoginLayout from '../../UI/layouts/LoginLayout';
+
+
 class LoginPage extends Component {
-    render(){
-      return(
-          <p> Login page Component!</p>
+ 
+  
+    render() {
+      return (
+        <LoginLayout >
+            <Login/>
+        </LoginLayout>
       );
     }
   }
-  export default LoginPage;
+  
+export default LoginPage;

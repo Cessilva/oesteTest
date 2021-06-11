@@ -1,4 +1,4 @@
-import Layout from '../../UI/layouts/Layout';
+import Layout from '../../UI/layouts/CenterLayout';
 import {Switch,Route} from 'react-router-dom';
 import { Component } from 'react';
 // Componentes

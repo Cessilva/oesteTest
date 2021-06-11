@@ -2,7 +2,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import MyAppBar from './MyAppBar';
+import MyAppBar from '../MyAppBar';
 
 
 //********-------ESTA ES LA FORMA BASE DE NUESTRO PROYECTO CON HEADER Y FOOTER-------*********
