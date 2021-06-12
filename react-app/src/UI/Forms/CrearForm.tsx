@@ -28,7 +28,7 @@ export default function CrearForm(props: Props) {
     const classes = useStyles();
 
     const [nombre, setNombre] = useState(``);
-    const [edad, setEdad] = useState(``);
+    const [edad, setEdad] = useState(0);
     const [sexo, setSexo] = useState(``);
 
     const nombreChangeHandler = (event: any) => {
@@ -40,9 +40,14 @@ export default function CrearForm(props: Props) {
     const sexoChangeHandler = (event: any) => {
         setSexo(event.target.value);
     }
-
     const botonClickHandler = (event: any) => {
-        props.botonHandler(nombre, edad, sexo);
+        if(isNaN(edad)){
+            console.log("No recibi un numero")
+            props.botonHandler(nombre,0.5, sexo);
+        }else{
+            props.botonHandler(nombre,Number(edad), sexo);
+        }
+        
     }
 
     return (

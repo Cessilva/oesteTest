@@ -9,8 +9,8 @@ class User {
     @Column()
     nombre?: string;
 
-    @Column({unique:true})
-    edad?: string;
+    @Column()
+    edad?: number;
 
     @Column()
     sexo?: string;
