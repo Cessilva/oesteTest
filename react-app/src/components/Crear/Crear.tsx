@@ -51,11 +51,10 @@ class Crear extends Component<Iprops> {
             axios.post(`/api/users`, { nombre: persona.nombre, edad: persona.edad, sexo: persona.sexo, codigo: persona.codigo })
                 .then(response => {
                     if (response.data.length) {
-                        console.log(`API Validation succesful, user found: `, response.data[1].token, response.data[0]);
+                        console.log(`API Validation succesful`, response.data[1].token, response.data[0]);
                     } else {
-                        console.log(`API Validation unsuccesful, no user found: `, response.data);
+                        console.log(`API Validation unsuccesful`, response.data);
                     }
-
                 })
                 .catch(error => {
                     console.log(`Error al crear : `, error)
