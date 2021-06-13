@@ -1,35 +1,48 @@
-import axios from 'axios';
 import { Component } from 'react';
-import DatosForm from '../../UI/Forms/DatosForm';
+import { IsString, Length, IsDefined, IsNotEmpty} from 'class-validator';
+
+import LoginForm from '../../UI/Forms/LoginForm';
+import { dataValidation } from '../../shared/dataValidation';
+
+
+export class AuthUserValidator {
+    @IsDefined({ message: `El nombre debe ser definido` })
+    @IsNotEmpty({ message: `El nombre no debe estar vacio` })
+    @IsString({ message: `El nombre debe ser un string` })
+    userName?: string;
+
+    @IsDefined({ message: `Contraseña debe ser definida` })
+    @IsNotEmpty({ message: `La contraseña no debe estar vacia` })
+    @Length(1, 8, { message: `Contraseña entre 1-8 caracteres` })
+    password?: string;
+}
 
 interface Iprops {
 
 }
 
-class Login extends Component <Iprops> {
-    onLoginClickHandler = async ( nombre: string, edad:string,sexo:string) => {
-        axios.post(`/api/auth`, {nombre: nombre, edad:edad,sexo:sexo})
-        .then(response => {
-            if ( response.data.length ){
-                console.log(`API Validation succesful, user found: `, response.data[1].token, response.data[0] );
-            } else{
-                console.log(`API Validation unsuccesful, no user found: `, response.data);
-            }
-            
-        })
-        .catch(error => {
-            console.log(`Error al crear : `, error)
-            })
-    } 
-    render( ) { return <LoginView {...this.props} botonHandler={this.onLoginClickHandler}/> }
-    
+class Login extends Component<Iprops> {
+
+    onCreateClickHandler = async (userName: string, password: string) => {
+        const errors = await dataValidation(AuthUserValidator, { userName, password });
+        if (errors) {
+            console.log(`Data Valitation failed `, errors)
+        } else {
+            console.log(`UserName: `, userName,`Password: `,password)
+        }
+    }
+    render() { return <LoginView {...this.props} botonHandler={this.onCreateClickHandler} /> }
 }
-interface IProps2{
+
+interface IProps2 {
     botonHandler: any;
 }
-class LoginView extends Component<IProps2>{
-    list= [["Email","Password"],["Enviar"]];
-    render( ) { return <DatosForm list={this.list} botonHandler={this.props.botonHandler}/> }
+class LoginView extends Component<IProps2> {
+    render() {
+        return (
+            <LoginForm botonHandler={this.props.botonHandler}></LoginForm>
+        );
+    }
 }
 
 export default Login;
