@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import axios from '../../UI/axios';
+import axios from '../../axios';
 import MyTable from '../../UI/MyTable';
 import MyProgressBar from '../../UI/MyProgressBar';
 
@@ -23,19 +23,16 @@ class Listar extends Component {
                 console.log(response.data);
                 const users: any[] = response.data;
                 const modUsers = users.map((user: any) => {
-                    return { Nombre: user.nombre, Edad: user.edad, Sexo: user.sexo, Codigo: user.codigo };
+                    return {Id:user.id, Nombre: user.nombre, Edad: user.edad, Sexo: user.sexo, Codigo: user.codigo };
                 })
                 this.setState({ loading: false, data: modUsers, error: null })
             })
             .catch(error => {
                 console.log(error);
                 this.setState({ loading: false, data: null, error: error })
-            })
-        //  axios.post('/api/users', { nombre: "Cecilia",edad: 25,sexo: "F", codigo: "xxxx" })
+            })  
     }
-
 }
-
 
 class ListarView extends Component<IProps>{
     renderLoading(){
