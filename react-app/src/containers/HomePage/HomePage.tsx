@@ -2,7 +2,7 @@ import CenterLayout from '../../UI/layouts/CenterLayout';
 import {Switch,Route} from 'react-router-dom';
 import { Component } from 'react';
 // Componentes
-import Crear from '../../components/Crear/Crear'
+import {Crear} from '../../components/Crear/Crear'
 import Editar from '../../components/Editar/Editar'
 import Listar from '../../components/Listar/Listar'
 

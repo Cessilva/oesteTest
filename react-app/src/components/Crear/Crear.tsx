@@ -84,4 +84,4 @@ class CrearView extends Component<IProps2> {
     }
 }
 
-export default Crear;
+export {Crear,Persona} ;
