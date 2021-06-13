@@ -45,7 +45,7 @@ const MyAppBar = (props:any)=> {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              AppBar Component
+              AppOeste
             </Typography>
             <Button color="inherit" onClick={homeButtonClickHandler}>Home</Button>
             <Button color="inherit" onClick={adminButtonClickHandler}>Admin</Button>

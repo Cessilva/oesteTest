@@ -3,7 +3,27 @@ import EditarForm from '../../UI/Forms/EditarForm';
 import MyProgressBar from '../../UI/MyProgressBar';
 import { Component } from 'react'
 import {Persona} from '../../components/Crear/Crear'
+import { IsDefined, IsInt, IsNotEmpty, IsString, Length, Max, Min } from 'class-validator';
 
+
+export class AuthUserValidator {
+    @IsDefined({ message: ` El nombre debe ser definido ` })
+    @IsNotEmpty({ message: ` El nombre no debe estar vacio ` })
+    @IsString({ message: ` El nombre debe ser un string ` })
+    @Length(5, 50, { message: `El nombre debe tener una extension de 5-50 caracteres` })
+    nombre?: string;
+
+    @IsDefined({ message: ` La edad debe ser definida ` })
+    @IsNotEmpty({ message: ` La edad  no debe estar vacia ` })
+    @IsInt({ message: ` La edad  debe ser un entero ` })
+    @Min(10, { message: ` La edad  debe ser mayor a 10 `})
+    @Max(90,{ message: ` La edad  debe ser mayor a 90 `})
+    edad?: number;
+
+    @IsString({ message: `El sexo debe ser un string` })
+    @Length(0, 1, { message: `Puede ser F o M` })
+    sexo?: string;
+}
 
 class Editar extends Component {
     //Representes in which state belong:loading,successfull or error 
@@ -15,6 +35,7 @@ class Editar extends Component {
     }
 
     onActualizarClickHandler = async (id:string , nombre: string, edad: number, sexo: string) => {
+
         console.log("Acttualizar")
         axios.patch(`/api/users/${id}`,this.data)
             .then(response => {
@@ -33,7 +54,7 @@ class Editar extends Component {
         this.data={ nombre: '', edad: '', sexo: '' , codigo: ''}
         this.setState({ loading: false, data: data, error: null })
     }
-
+    
     searchClickHandler = (id: string) => {
             axios.get(`/api/users/${id}`)
                 .then(response => {
@@ -75,7 +96,6 @@ interface IProps2 {
     cambiaDataHandler:any;
     loading: boolean;
     data: any;
-    error: any;
 }
 class EditarView extends Component<IProps2>{
     renderLoading() {

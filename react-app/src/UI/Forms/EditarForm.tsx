@@ -28,7 +28,6 @@ interface Props {
     botonGenerarCodeHandler: any;
     cambiaDataHandler:any;
     data?: any
-    
     window?: () => Window;
 }
 
@@ -56,6 +55,7 @@ export default function EditarForm(props: Props) {
     const idChangeHandler = (event: any) => {
         setId(event.target.value);
     }
+
 
     const botonActualizarClickHandler = (event: any) => {
         if (isNaN(edad)) {

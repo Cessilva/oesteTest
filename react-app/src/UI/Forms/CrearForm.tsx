@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 interface Props {
     botonHandler: any;
+    data:any;
     window?: () => Window;
 }
 
@@ -28,7 +29,7 @@ export default function CrearForm(props: Props) {
     const classes = useStyles();
 
     const [nombre, setNombre] = useState(``);
-    const [edad, setEdad] = useState(0);
+    const [edad, setEdad] = useState();
     const [sexo, setSexo] = useState(``);
 
     const nombreChangeHandler = (event: any) => {
@@ -41,13 +42,13 @@ export default function CrearForm(props: Props) {
         setSexo(event.target.value);
     }
     const botonClickHandler = (event: any) => {
-        if(isNaN(edad)){
-            console.log("No recibi un numero")
-            props.botonHandler(nombre,0.5, sexo);
-        }else{
-            props.botonHandler(nombre,Number(edad), sexo);
+        if(event){
+            if(edad){
+                props.botonHandler(nombre,Number(edad), sexo);
+            }else{
+                props.botonHandler(nombre,undefined, sexo);
+            }
         }
-        
     }
 
     return (
@@ -56,8 +57,10 @@ export default function CrearForm(props: Props) {
                 <Input className={classes.display} placeholder="Nombre" inputProps={{ 'aria-label': 'description' }} onChange={nombreChangeHandler}/>
                 <Input className={classes.display} placeholder="Edad" inputProps={{ 'aria-label': 'description' }} onChange={edadChangeHandler}/>
                 <Input className={classes.display} placeholder="Sexo" inputProps={{ 'aria-label': 'description' }} onChange={sexoChangeHandler}/>
+                <p>{props.data}</p>
                 <div ><Button fullWidth variant="contained" color="primary" onClick={botonClickHandler}>Guardar</Button> </div>
             </form>
+            
         </Paper>
     );
 

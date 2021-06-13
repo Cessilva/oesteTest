@@ -1,20 +1,22 @@
 import { Component } from 'react';
-import { IsString, Length, IsDefined, IsNotEmpty, IsInt, Min } from 'class-validator';
+import { IsString, Length, IsDefined, IsNotEmpty, IsInt, Min, Max } from 'class-validator';
 import axios from '../../axios';
 import CrearForm from '../../UI/Forms/CrearForm';
 import { dataValidation } from '../../shared/dataValidation';
 
 
 export class AuthUserValidator {
-    @IsDefined({ message: `El nombre debe ser definido` })
-    @IsNotEmpty({ message: `El nombre no debe estar vacio` })
-    @IsString({ message: `El nombre debe ser un string` })
+    @IsDefined({ message: ` El nombre debe ser definido ` })
+    @IsNotEmpty({ message: ` El nombre no debe estar vacio ` })
+    @IsString({ message: ` El nombre debe ser un string ` })
+    @Length(5, 50, { message: `El nombre debe tener una extension de 5-50 caracteres` })
     nombre?: string;
 
-    @IsDefined({ message: `La edad debe ser definida` })
-    @IsNotEmpty({ message: `La edad  no debe estar vacia` })
-    @IsInt({ message: `La edad  debe ser un entero` })
-    @Min(1, { message: `La edad  debe ser mayor a 0` })
+    @IsDefined({ message: ` La edad debe ser definida ` })
+    @IsNotEmpty({ message: ` La edad  no debe estar vacia ` })
+    @IsInt({ message: ` La edad  debe ser un entero ` })
+    @Min(10, { message: ` La edad  debe ser mayor a 10 `})
+    @Max(90,{ message: ` La edad  debe ser mayor a 90 `})
     edad?: number;
 
     @IsString({ message: `El sexo debe ser un string` })
@@ -45,43 +47,50 @@ class Persona {
 
 }
 
-interface Iprops {
-
-}
-
-class Crear extends Component<Iprops> {
+class Crear extends Component {
+    state = {  data: null, error: null };
 
     onCreateClickHandler = async (nombre: string, edad: number, sexo: string) => {
         const persona = new Persona(nombre, edad, sexo)
         const errors = await dataValidation(AuthUserValidator, { nombre, edad, sexo });
         if (errors) {
             console.log(`Data Valitation failed `, errors)
+            this.setState({ data: null, error:errors })
         } else {
             axios.post(`/api/users`, { nombre: persona.nombre, edad: persona.edad, sexo: persona.sexo, codigo: persona.codigo })
                 .then(response => {
-                    if (response.data.length) {
-                        console.log(`API Validation succesful`, response.data[1].token, response.data[0]);
-                    } else {
-                        console.log(`API Validation unsuccesful`, response.data);
-                    }
+                        this.setState({ data: 'Creado correctamente', error: null })
                 })
                 .catch(error => {
                     console.log(`Error al crear : `, error)
                 })
         }
     }
-    render() { return <CrearView {...this.props} botonHandler={this.onCreateClickHandler} /> }
+    render() { return <CrearView {...this.state} botonHandler={this.onCreateClickHandler} /> }
 }
 
 interface IProps2 {
     botonHandler: any;
+    data:any;
+    error:any;
 }
 class CrearView extends Component<IProps2> {
+
+    renderSuccessfull() {
+        const dataJSX = <CrearForm data={this.props.data} botonHandler={this.props.botonHandler}></CrearForm>
+        return dataJSX;
+    }
+    renderError() {
+        const dataJSX = <CrearForm data={this.props.error} botonHandler={this.props.botonHandler}></CrearForm>
+        return dataJSX;
+    }
+
     render() {
-        return (
-            <CrearForm botonHandler={this.props.botonHandler}></CrearForm>
-        );
+        if (this.props.data) {
+            return (this.renderSuccessfull());
+        } else {
+            return (this.renderError());
+        }
     }
 }
-
 export {Crear,Persona} ;
