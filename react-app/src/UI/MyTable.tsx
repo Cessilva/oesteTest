@@ -41,71 +41,56 @@ const StyledTableRow = withStyles((theme: Theme) =>
 )(TableRow);
 
 interface IProps {
-     rows: any[];
+    rows: any[];
     // botonHandler: any;
-    // editeHandler: any;
-
+    editeHandler: any;
+    botonTodosHandler:any;
+    botonHombresHandler:any;
+    botonMujeresHandler:any;
 }
-
-// function createData(nombre: string, edad: number, sexo: string, codigo: string) {
-//     return { nombre, edad, sexo, codigo};
-// }
-
-// const rows = [
-//     createData('Frozen yoyghurt', 159, 'f' , 'ghhg'),
-//     createData('Ice cream sandwich', 237, 'f','ghhg'),
-//     createData('Eclair', 262, 'f','ghhg'),
-//     createData('Cupcake', 305,  'f','ghhg'),
-//     createData('Gingerbread', 356, 'f','ghhg'),
-// ];
 
 
 
 export default function MyTable(props: IProps) {
     const classes = useStyles();
 
-    const botonHandler = (event: unknown) => {
-        console.log("Filtro", event)
-    };
-    const editeHandler = (event: unknown) => {
-        console.log("Editar", event)
-    };
 
     return (
-        
+
         <TableContainer component={Paper}>
-            <ButtonGroup size="large" onClick={botonHandler} aria-label="large outlined primary button group">
-                <Button>Todos</Button>
-                <Button>Hombres</Button>
-                <Button>Mujeres</Button>
+            <ButtonGroup size="large"  aria-label="large outlined primary button group">
+                <Button onClick={props.botonTodosHandler}>Todos</Button>
+                <Button onClick={props.botonHombresHandler}>Hombres</Button>
+                <Button onClick={props.botonMujeresHandler}>Mujeres</Button>
             </ButtonGroup>
-            {props.rows.length?
-            <Table className={classes.table} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        {Object.keys(props.rows[0]).map((key, index) => (
-                            index === 0 ? <StyledTableCell key={index}  >{key}</StyledTableCell> : <StyledTableCell key={index} align="center" >{key}</StyledTableCell> 
-                        ))}
-                        <StyledTableCell align="center" >Actions</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                  {props.rows.map((row: any, index: number) => {
-                return (
-                  <StyledTableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    {Object.values<string>(row).map((value, index) => (
-                      index === 0 ? <StyledTableCell key={index}>{value}</StyledTableCell> : <StyledTableCell key={index} align="center">{value}</StyledTableCell>
-                    ))}
-                    <TableCell align="center">
-                      <IconButton  aria-label="delete" onClick={editeHandler}><EditIcon /></IconButton>
-                      </TableCell>
-                  </StyledTableRow> 
-                );
-              })}
-                </TableBody>
-            </Table>
-            : <p>No hay datos disponibles!</p> }
-        </TableContainer> 
+            {props.rows.length ?
+                <Table className={classes.table} aria-label="customized table">
+
+                    <TableHead>
+                        <TableRow>
+                            {Object.keys(props.rows[0]).map((key, index) => (
+                                index === 0 ? <StyledTableCell key={index}  >{key}</StyledTableCell> : <StyledTableCell key={index} align="center" >{key}</StyledTableCell>
+                            ))}
+                            <StyledTableCell align="center" >Actions</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {props.rows.map((row: any, index: number) => {
+                            return (
+                                <StyledTableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                    {Object.values<string>(row).map((value, index) => (
+                                        index === 0 ? <StyledTableCell key={index}>{value}</StyledTableCell> : <StyledTableCell key={index} align="center">{value}</StyledTableCell>
+                                    ))}
+                                    <TableCell align="center">
+                                        <IconButton value={props.rows} aria-label="delete" onClick={props.editeHandler}><EditIcon /></IconButton>
+                                    </TableCell>
+                                </StyledTableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+                : <p>No hay datos disponibles!</p>}
+        </TableContainer>
 
     );
 }

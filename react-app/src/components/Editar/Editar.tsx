@@ -4,6 +4,7 @@ import MyProgressBar from '../../UI/MyProgressBar';
 import { Component } from 'react'
 import {Persona} from '../../components/Crear/Crear'
 import { IsDefined, IsInt, IsNotEmpty, IsString, Length, Max, Min } from 'class-validator';
+import { dataValidation } from '../../shared/dataValidation';
 
 
 export class AuthUserValidator {
@@ -35,15 +36,19 @@ class Editar extends Component {
     }
 
     onActualizarClickHandler = async (id:string , nombre: string, edad: number, sexo: string) => {
-
-        console.log("Acttualizar")
-        axios.patch(`/api/users/${id}`,this.data)
+        const errors = await dataValidation(AuthUserValidator, this.data);
+        if (errors) {
+            console.log(`Data Valitation failed `, errors)
+            this.setState({ data: null, error:errors })
+        } else {
+            axios.patch(`/api/users/${id}`,this.data)
             .then(response => {
                 console.log(`Elemento actualizado`, response.data);
             })
             .catch(error => {
                 console.log(`Error al crear : `, error)
             })
+        }
     }
 
     onEliminarClickHandler = async (id: string) => {
@@ -96,6 +101,7 @@ interface IProps2 {
     cambiaDataHandler:any;
     loading: boolean;
     data: any;
+    error:any;
 }
 class EditarView extends Component<IProps2>{
     renderLoading() {
@@ -107,7 +113,8 @@ class EditarView extends Component<IProps2>{
         return dataJSX;
     }
     renderError() {
-        const dataJSX = <h3>Error...</h3>;
+        var data = { nombre: '', edad: '', sexo: '', codigo: '' }
+        const dataJSX =  <EditarForm error={this.props.error} data={data} cambiaDataHandler={this.props.cambiaDataHandler}  botonBuscarClickHandler={this.props.botonBuscarClickHandler} botonActualizarHandler={this.props.botonActualizarHandler} botonEliminarHandler={this.props.botonEliminarHandler} botonGenerarCodeHandler={this.props.botonGenerarCodeHandler}/>;
         return dataJSX;
     }
 

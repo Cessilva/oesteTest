@@ -27,7 +27,8 @@ interface Props {
     botonBuscarClickHandler: any;
     botonGenerarCodeHandler: any;
     cambiaDataHandler:any;
-    data?: any
+    data?: any;
+    error?:any
     window?: () => Window;
 }
 
@@ -88,6 +89,7 @@ export default function EditarForm(props: Props) {
                             <Input className={classes.display} value={props.data.sexo} placeholder="Sexo" inputProps={{ 'aria-label': 'description' }} onChange={sexoChangeHandler} />
                             <div ><Button fullWidth variant="contained" color="primary" onClick={botonActualizarClickHandler}>Actualizar</Button> </div>
                             <div ><Button fullWidth variant="contained" color="primary" onClick={botonEliminarClickHandler}>Eliminar</Button> </div>
+                            <p>{props.error}</p>
                         </form>    
                 </Paper>
             </Grid>
